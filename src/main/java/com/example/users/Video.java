@@ -19,6 +19,7 @@ public class Video {
 
     @OneToMany(mappedBy = "video")
     private List<Rate> rateList = new ArrayList<>();
+
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "video_id")
@@ -29,12 +30,13 @@ public class Video {
 
     }
 
-    public Video(String url, String title, String description) throws Exception {
+    public Video(String url, String title, String description, User user) throws Exception {
         checkUrl(url);
         checkTitle(title);
         this.url = url;
         this.title = title;
         this.description = description;
+        this.user = user;
     }
 
 
@@ -65,27 +67,30 @@ public class Video {
     public String getDescription() {
         return description;
     }
-/*
 
-    public Rating rateVideo(Rating rating) {
-        ratingList.add(rating);
+    public void setUrl(String url) throws Exception {
+        checkUrl(url);
+        this.url = url;
+    }
+
+    public void setTitle(String title) throws Exception {
+        checkTitle(title);
+        this.title = title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Rate rateVideo(Rate rating) {
+        rateList.add(rating);
         return rating;
     }
 
 
 
-    public List<Rating> getRatingList() {
-        return ratingList;
+    public List<Rate> getRateList() {
+        return rateList;
     }
-*/
 
-    @Override
-    public String toString() {
-        return "Video{" +
-                "id='" + id + '\'' +
-                ", url='" + url + '\'' +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                '}';
-    }
 }

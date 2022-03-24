@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity(name = "users")
-public class User {
+public class    User {
 
     @Id
     private String id = UUID.randomUUID().toString();
@@ -19,9 +19,6 @@ public class User {
     private String password;
     @OneToMany(mappedBy = "user")
     private List<Video> videoList = new ArrayList<>();
-
-
-
 
     public User() {
 

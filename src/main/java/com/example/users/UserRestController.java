@@ -31,10 +31,10 @@ public class UserRestController {
         return userController.getAllUsers();
     }
 
-    @GetMapping("/{id}")
+    /*@GetMapping("/{id}")
     public User getUser(@PathVariable String id){
-        return userController.getUser(id);
-    }
+        return userController.findUser(id);
+    }*/
     @DeleteMapping
     public void deleteAllUsers(){
         userController.deleteAllUsers();

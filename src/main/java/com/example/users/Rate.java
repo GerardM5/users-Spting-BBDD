@@ -18,7 +18,7 @@ public class Rate {
     private String comment;
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name="video_id")
+    @JoinColumn(name = "video_id")
     private Video video;
 
     public Rate() {
@@ -26,7 +26,7 @@ public class Rate {
     }
 
     public Rate(int rating, String comment) throws Exception {
-        checkRating(rating);
+        checkRate(rating);
         checkComment(comment);
         this.rating = rating;
         this.comment = comment;
@@ -36,31 +36,23 @@ public class Rate {
         if (comment.equals("")) throw new Exception("No hay comentario");
     }
 
-    public String getId() {
-        return id;
+    private void checkRate(int rating) throws Exception {
+        if (rating > 5 || rating < 1) throw new Exception("Error en la valoración");
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getId() {
+        return id;
     }
 
     public int getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
-        this.rating = rating;
-    }
-
     public String getComment() {
         return comment;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
-    private void checkRating(int rating) throws Exception {
-        if (rating > 5 || rating < 1) throw new Exception("Error en la valoración");
+    public void setVideo(Video video) {
+        this.video = video;
     }
 }

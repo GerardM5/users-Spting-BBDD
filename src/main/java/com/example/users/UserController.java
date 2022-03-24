@@ -14,8 +14,10 @@ public class UserController {
     private VideoRepository videoRepository;
     private RateRepository rateRepository;
 
-    public UserController(UserRepository userRepository){
-        this.userRepository=userRepository;
+    public UserController(UserRepository userRepository, VideoRepository videoRepository, RateRepository rateRepository) {
+        this.userRepository = userRepository;
+        this.videoRepository = videoRepository;
+        this.rateRepository = rateRepository;
     }
 
     public User createUser(User userToCreate){
@@ -30,13 +32,13 @@ public class UserController {
     }
 
 
-    public User getUser(String userId) {
+    private User findUser(String userId) {
         return userRepository.findById(userId).get();
     }
 
 
     public User updateUser(String userId, User newUser){
-        User userToModify = getUser(userId);
+        User userToModify = findUser(userId);
         userToModify.setEmail(newUser.getEmail());
         userToModify.setPassword(newUser.getPassword());
         userToModify.setName(newUser.getName());
@@ -52,26 +54,33 @@ public class UserController {
         userRepository.deleteAll();
     }
 
-    public Video uploadVideo(String userId, Video videoToUpload) {
-        User user = getUser(userId);
-        videoToUpload = user.addVideo(videoToUpload);
-        videoRepository.save(videoToUpload);
-        return videoToUpload;
+    public Video addVideo(String userId, Video video) {
+        User user = findUser(userId);
+        video = user.addVideo(video);
+        videoRepository.save(video);
+        return video;
     }
 
 
     public List<Video> getVideosOfUser(String userId) {
-        List<Video>videoList = new ArrayList<>();
-        videoRepository.findAll().forEach(videoList::add);
-        return videoList;
+        User user = findUser(userId);
+        return user.getVideoList();
     }
 
     public Video getVideoOfUser(String videoId) {
-        //videoRepository.findById(videoId);
         return videoRepository.findById(videoId).get();
     }
-
+    public void deleteUserVideos(String userId) throws Exception {
+        User user = findUser(userId);
+        videoRepository.deleteAllByUser(user);
+    }
     public void deleteVideosOfUser(String userId) {
         videoRepository.deleteAll();
     }
+/*
+    public void rateVideo(String userId, String videoId, Rate rate) throws Exception {
+        Video video = getVideo(userId, videoId);
+        video.addRate(rate);
+        rateRepository.save(rate);
+    }*/
 }

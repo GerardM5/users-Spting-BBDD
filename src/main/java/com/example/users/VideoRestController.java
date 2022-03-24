@@ -5,19 +5,18 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/users/{userId}/videos/")
+@RequestMapping("/users/{userId}/videos")
 public class VideoRestController {
 
     private UserController userController;
 
     public VideoRestController(UserController userController) {
-        this.userController = this.userController;
+        this.userController = userController;
     }
-
 
     @PostMapping
     public Video uploadVideo(@PathVariable String userId, @RequestBody Video videoToUpload) throws Exception {
-        return userController.uploadVideo(userId, videoToUpload);
+        return userController.addVideo(userId, videoToUpload);
     }
 
     @GetMapping
@@ -25,7 +24,7 @@ public class VideoRestController {
         return userController.getVideosOfUser(userId);
     }
 
-    @GetMapping("{videoId}")
+    @GetMapping("/{videoId}")
     public Video getVideoOfUser(@PathVariable String userId, @PathVariable String videoId) throws Exception {
         return userController.getVideoOfUser(videoId);
     }
@@ -35,7 +34,7 @@ public class VideoRestController {
         userController.deleteVideosOfUser(userId);
     }
 //
-//    @PostMapping("{videoId}")
+//    @PostMapping("/{videoId}")
 //    public Rating rateVideo(@PathVariable String userId,@PathVariable String videoId,@RequestBody Rating rating) throws Exception {
 //        return userController.rateVideo(userId,videoId,rating);
 //    }
