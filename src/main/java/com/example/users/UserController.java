@@ -11,6 +11,8 @@ public class UserController {
 
 
     private UserRepository userRepository;
+    private VideoRepository videoRepository;
+    private RateRepository rateRepository;
 
     public UserController(UserRepository userRepository){
         this.userRepository=userRepository;
@@ -37,7 +39,7 @@ public class UserController {
         User userToModify = getUser(userId);
         userToModify.setEmail(newUser.getEmail());
         userToModify.setPassword(newUser.getPassword());
-        userToModify.setGender(newUser.getGender());
+        userToModify.setName(newUser.getName());
         userRepository.save(userToModify);
         return userToModify;
     }
@@ -50,4 +52,26 @@ public class UserController {
         userRepository.deleteAll();
     }
 
+    public Video uploadVideo(String userId, Video videoToUpload) {
+        User user = getUser(userId);
+        videoToUpload = user.addVideo(videoToUpload);
+        videoRepository.save(videoToUpload);
+        return videoToUpload;
+    }
+
+
+    public List<Video> getVideosOfUser(String userId) {
+        List<Video>videoList = new ArrayList<>();
+        videoRepository.findAll().forEach(videoList::add);
+        return videoList;
+    }
+
+    public Video getVideoOfUser(String videoId) {
+        //videoRepository.findById(videoId);
+        return videoRepository.findById(videoId).get();
+    }
+
+    public void deleteVideosOfUser(String userId) {
+        videoRepository.deleteAll();
+    }
 }

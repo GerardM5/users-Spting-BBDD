@@ -16,13 +16,13 @@ public class UserRestController {
 
 
     @PostMapping
-    public User createUser(@RequestBody User userToCreate) throws Exception {
+    public User createUser(@RequestBody User userToCreate){
 
         return userController.createUser(userToCreate);
     }
 
     @PutMapping("/{userId}")
-    public User updateUser(@PathVariable String userId, @RequestBody User newUser) throws Exception {
+    public User updateUser(@PathVariable String userId, @RequestBody User newUser){
         return userController.updateUser(userId, newUser);
     }
 
@@ -32,7 +32,7 @@ public class UserRestController {
     }
 
     @GetMapping("/{id}")
-    public User getUser(@PathVariable String id) throws Exception {
+    public User getUser(@PathVariable String id){
         return userController.getUser(id);
     }
     @DeleteMapping
@@ -41,7 +41,7 @@ public class UserRestController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable String id) throws Exception {
+    public void deleteUser(@PathVariable String id){
         userController.deleteUser(id);
     }
 
